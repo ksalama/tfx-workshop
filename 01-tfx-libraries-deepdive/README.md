@@ -9,5 +9,6 @@ The puprpose of these labs is to show how to do end-to-end ML with TensorFlow Ex
 ![alt text](imgs/tfx-libraries.png "TFX libraries in action!")
 
 
-The dataset used in these labs is the UCI Adult Dataset: https://archive.ics.uci.edu/ml/datasets/adult
+The dataset used in these labs is the **UCI Adult Dataset**: https://archive.ics.uci.edu/ml/datasets/adult.
+
 It is a classification dataset, where the task is to predict whether income exceeds 50K USD per yearr based on census data. It is also known as "Census Income" dataset.
