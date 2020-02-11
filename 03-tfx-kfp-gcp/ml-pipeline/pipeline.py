@@ -20,7 +20,7 @@ from kfp import gcp
 from tfx.components.base import executor_spec
 from tfx.components.common_nodes.importer_node import ImporterNode
 from tfx.components.evaluator.component import Evaluator
-from tfx.components.example_gen.csv_example_gen.component import CsvExampleGen
+from tfx.components.example_gen.big_query_example_gen.component import BigQueryExampleGen
 from tfx.components.example_validator.component import ExampleValidator
 from tfx.components.model_validator.component import ModelValidator
 from tfx.components.pusher.component import Pusher
@@ -47,9 +47,12 @@ def _create__pipeline(pipeline_name: Text, pipeline_root: Text, data_root: Text,
                       beam_pipeline_args: List[Text]) -> pipeline.Pipeline:
     """Implements the online news pipeline with TFX."""
 
-    # Brings data into the pipeline or otherwise joins/converts training data.
-    example_gen = CsvExampleGen(
-        input_base=external_input(data_root)
+    # Dataset, table and/or 'where conditions' are passed as pipeline args.
+    query='SELECT * FROM sample_datasets.census' 
+    
+    # Brings data into the pipeline from BigQuery.
+    example_gen = BigQueryExampleGen(
+        query=query
     )
 
     # Computes statistics over data for visualization and example validation.
