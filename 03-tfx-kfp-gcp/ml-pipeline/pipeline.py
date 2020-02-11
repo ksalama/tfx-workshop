@@ -61,7 +61,7 @@ def _create__pipeline(pipeline_name: Text, pipeline_root: Text, data_root: Text,
     # Import schema from local directory.
     schema_importer = ImporterNode(
         instance_name='RawSchemaImporter',
-        source_uri='workspace/raw_schema',
+        source_uri='~/workspace/raw_schema',
         artifact_type=Schema,
     )
 
@@ -75,14 +75,14 @@ def _create__pipeline(pipeline_name: Text, pipeline_root: Text, data_root: Text,
     transform = Transform(
         input_data=example_gen.outputs.examples,
         schema=schema_importer.outputs.result,
-        module_file='workspace/modules/transform.py'
+        module_file='~/workspace/modules/transform.py'
     )
 
     # Train and export serving and evaluation saved models.
     trainer = Trainer(
         custom_executor_spec=executor_spec.ExecutorClassSpec(
             ai_platform_trainer_executor.Executor),
-        module_file='workspace/modules/train.py',
+        module_file='~/workspace/modules/train.py',
         transformed_examples=transform.outputs.transformed_examples,
         schema=schema_importer.outputs.result,
         transform_output=transform.outputs.transform_output,
