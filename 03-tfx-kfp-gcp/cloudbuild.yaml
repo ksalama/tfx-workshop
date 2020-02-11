@@ -28,7 +28,7 @@ steps:
 
 
 # Compile and deploy the TFX pipeline to KFP  
-- name: 'gcr.io/$PROJECT_ID/mlops-dev:TF115-TFX015-KFP136'
+- name: 'gcr.io/$PROJECT_ID/tfx-cli'
   args: ['pipeline', 'create', '--engine', 'kubeflow', '--pipeline_path', '$_PIPELINE_DSL', '--endpoint', '$_KFP_INVERSE_PROXY_HOST']
   env: 
   - 'TFX_IMAGE=gcr.io/$PROJECT_ID/$_TFX_IMAGE_NAME:$TAG_NAME'
