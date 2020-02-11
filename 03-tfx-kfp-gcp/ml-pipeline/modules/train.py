@@ -75,19 +75,6 @@ def _serving_input_receiver_fn(transform_output, schema):
     raw_feature_spec = schema_utils.schema_as_feature_spec(schema).feature_spec
     raw_feature_spec.pop(TARGET_FEATURE_NAME)
     raw_feature_spec.pop(WEIGHT_FEATURE_NAME)
-    
-#     # Create the interface for the serving function with the raw features
-#     serving_input_receiver = tf.estimator.export.build_parsing_serving_input_receiver_fn(
-#           raw_feature_spec, default_batch_size=None)()
-    
-#     # Apply the transform function 
-#     transformed_features = transform_output.transform_raw_features(
-#         serving_input_receiver.features)
-    
-#     return tf.estimator.export.ServingInputReceiver(
-#         transformed_features, 
-#         serving_input_receiver.features
-#     )
 
     # Create the interface for the serving function with the raw features
     raw_features = tf.estimator.export.build_parsing_serving_input_receiver_fn(

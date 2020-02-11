@@ -4,7 +4,7 @@ import tensorflow_data_validation as tfdv
 
 TARGET_FEATURE_NAME = 'income_bracket'
 WEIGHT_FEATURE_NAME = 'fnlwgt'
-RAW_SCHEMA_LOCATION = './workspace/raw_schema/schema.pbtxt'
+RAW_SCHEMA_LOCATION = './raw_schema/schema.pbtxt'
 
 raw_schema = tfdv.load_schema_text(RAW_SCHEMA_LOCATION)
 
