@@ -59,10 +59,10 @@ class AccuracyValidatorExecutor(base_executor.BaseExecutor):
         results_uri = input_dict['eval_results'][0].uri
         eval_results = tfma.load_eval_result(results_uri)
         
-        overall_acc = eval_result.slicing_metrics[0][1]['']['']['accuracy']['doubleValue']
+        overall_acc = eval_results.slicing_metrics[0][1]['']['']['accuracy']['doubleValue']
 
         if overall_acc >= accuracy_threshold:
-            for slicing_metric in eval_result.slicing_metrics:
+            for slicing_metric in eval_results.slicing_metrics:
                 slice_acc = slicing_metric[1]['']['']['accuracy']['doubleValue']
                 if slice_acc < min_slice_accuracy:
                     valid = False
