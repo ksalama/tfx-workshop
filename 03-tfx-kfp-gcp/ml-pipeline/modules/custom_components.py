@@ -13,6 +13,7 @@
 # limitations under the License.
 """TFX Custom Components."""
 
+import os
 import tensorflow_model_analysis as tfma
 import tfx
 from tfx.types import standard_artifacts
