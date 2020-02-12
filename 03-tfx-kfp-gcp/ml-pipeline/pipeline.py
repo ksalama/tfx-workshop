@@ -41,14 +41,14 @@ from use_mysql_secret import use_mysql_secret
 from modules.custom_components import AccuracyModelValidator
 
 
-def _create__pipeline(pipeline_name: Text, pipeline_root: Text, data_root: Text,
+def _create__pipeline(pipeline_name: Text, pipeline_root: Text, dataset_name: Text,
                       ai_platform_training_args: Dict[Text, Text],
                       ai_platform_serving_args: Dict[Text, Text],
                       beam_pipeline_args: List[Text]) -> pipeline.Pipeline:
     """Implements the online news pipeline with TFX."""
 
-    # Dataset, table and/or 'where conditions' are passed as pipeline args.
-    query='SELECT * FROM sample_datasets.census' 
+    # Dataset, table and/or 'where conditions' can be passed as pipeline args.
+    query='SELECT * FROM {}.census'.format(_dataset_name) 
     
     # Brings data into the pipeline from BigQuery.
     example_gen = BigQueryExampleGen(
@@ -61,7 +61,7 @@ def _create__pipeline(pipeline_name: Text, pipeline_root: Text, data_root: Text,
     # Import schema from local directory.
     schema_importer = ImporterNode(
         instance_name='RawSchemaImporter',
-        source_uri='~/workspace/raw_schema',
+        source_uri='raw_schema',
         artifact_type=Schema,
     )
 
@@ -75,14 +75,14 @@ def _create__pipeline(pipeline_name: Text, pipeline_root: Text, data_root: Text,
     transform = Transform(
         input_data=example_gen.outputs.examples,
         schema=schema_importer.outputs.result,
-        module_file='~/workspace/modules/transform.py'
+        module_file='modules/transform.py'
     )
 
     # Train and export serving and evaluation saved models.
     trainer = Trainer(
         custom_executor_spec=executor_spec.ExecutorClassSpec(
             ai_platform_trainer_executor.Executor),
-        module_file='~/workspace/modules/train.py',
+        module_file='modules/train.py',
         transformed_examples=transform.outputs.transformed_examples,
         schema=schema_importer.outputs.result,
         transform_output=transform.outputs.transform_output,
@@ -138,7 +138,7 @@ if __name__ == '__main__':
     _project_id = os.environ.get('PROJECT_ID')
     _gcp_region = os.environ.get('GCP_REGION')
     _pipeline_image = os.environ.get('TFX_IMAGE')
-    _gcs_data_root_uri = os.environ.get('DATA_ROOT_URI')
+    _dataset_name = os.environ.get('DATASET_NAME')
     _artifact_store_uri = os.environ.get('ARTIFACT_STORE_URI')
     _runtime_version = os.environ.get('RUNTIME_VERSION')
     _python_version = os.environ.get('PYTHON_VERSION')
@@ -195,7 +195,7 @@ if __name__ == '__main__':
         _create__pipeline(
             pipeline_name=_pipeline_name,
             pipeline_root=_pipeline_root,
-            data_root=_gcs_data_root_uri,
+            dataset_name=_dataset_name,
             ai_platform_training_args=_ai_platform_training_args,
             ai_platform_serving_args=_ai_platform_serving_args,
             beam_pipeline_args=_beam_pipeline_args)
