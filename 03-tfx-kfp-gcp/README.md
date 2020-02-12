@@ -1,4 +1,4 @@
-# Orchestrating and running ML TFX pipelines with KFP and Cloud AI Platform
+# Orchestrating and running TFX Pipelines with KFP and Cloud AI Platform
 
 In these labs, we will develop, deploy and run a TFX pipeline that uses [Kubeflow Pipelines](https://www.kubeflow.org/docs/pipelines/) for orchestration, and Cloud Dataflow and Cloud AI Platform Services for data processing, training, and serving.
 
