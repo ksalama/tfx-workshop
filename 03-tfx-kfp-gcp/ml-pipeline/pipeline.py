@@ -156,6 +156,7 @@ if __name__ == '__main__':
     _ai_platform_serving_args = {
         'model_name': 'model_' + _pipeline_name,
         'project_id': _project_id,
+        'region': _gcp_region,
         'runtimeVersion': _runtime_version,
         'pythonVersion': _python_version
     }
