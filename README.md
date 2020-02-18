@@ -9,7 +9,7 @@ This repository is workshop for exploring TensorFlow Extended (TFX) libraries an
 
 ### Requirements
 
-This workshop uses *Python 3.6* requires the following packages:
+This workshop uses **Python 3.6** requires the following packages:
 
 * TensorFlow 1.15
 * Apache Beam  2.16
